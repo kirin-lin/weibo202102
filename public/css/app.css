@@ -10949,7 +10949,29 @@ body {
   font-weight: normal;
 }
 
-nav.navbar.navbar-expand-lg {
+nav.navbar {
   margin-bottom: 20px;
+}
+
+footer {
+  border-top: 1px solid #eaeaea;
+  margin-top: 45px;
+  padding-top: 5px;
+  color: #777;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+footer a {
+  color: #555;
+}
+
+footer a:hover {
+  color: #222;
+}
+
+footer img.brand-icon {
+  width: 17px;
+  height: 17px;
 }
 
