@@ -10,7 +10,7 @@
       Everything is starting here.
     </p>
     <p>
-      <a class="btn btn-lg btn-success" href="#" role="button">Register Now</a>
+      <a class="btn btn-lg btn-success" href="{{ route('signup') }}" role="button">Register Now</a>
     </p>
   </div>
 @stop
