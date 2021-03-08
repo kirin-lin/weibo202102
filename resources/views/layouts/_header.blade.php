@@ -11,7 +11,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a href="{{ route('users.show', Auth::user()) }}" class="dropdown-item">個人中心</a>
-            <a href="#" class="dropdown-item">編輯資料</a>
+            <a href="{{ route('users.edit', Auth::user()) }}" class="dropdown-item">編輯資料</a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item" id="logout" href="#">
               <form action="{{ route('logout') }}" method="POST">
