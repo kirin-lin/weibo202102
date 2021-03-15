@@ -3,7 +3,7 @@
     <a class="navbar-brand" href="{{ route('home') }}">Weibo App</a>
     <ul class="navbar-nav justify-content-end">
       @if (Auth::check())
-        <li class="nav-item"><a href="#" class="nav-link">用戶列表</a></li>
+        <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link">用戶列表</a></li>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
             rold="button" data-toggle="dropdown" aria-haspopup="true" aria-expand="false">
