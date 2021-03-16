@@ -47,4 +47,54 @@ class PasswordController extends Controller
         session()->flash('success', 'Reset Email send success');
         return redirect()->back();
     }
+
+    public function showResetForm(Request $request)
+    {
+        $token = $request->route()->parameter('token');
+        return view('auth.passwords.reset', compact('token'));
+    }
+
+    public function reset(Request $request)
+    {
+        $request->validate([
+            'token' => 'require',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        $email = $request->email;
+        $token = $request->token;
+        $expires = 60 * 10;
+
+        $user = User::where('email', $email)->first();
+
+        if (is_null($user)) {
+            session()->flash('danger', '非註冊信箱');
+            return redirect()->back()->withInput();
+        }
+
+        $record = (array) DB::table('password_resets')->where('email', $email)->first();
+
+        if ($record) {
+            if (Carbon::parse($record['created_at'])->addSeconds($expires)->isPast()) {
+                session()->flash('danger', 'Link expired, please retry');
+                return redirect()->back();
+            }
+
+            if ( ! Hash::check($token, $record['token'])) {
+                session()->flash('danger', 'token error');
+                return redirect()->back();
+            }
+
+            $user->update(['password' => bcrypt($request->password)]);
+
+            session()->flash('success', 'password reset success');
+            return redirect()->route('login');
+        }
+
+        session()->flash('danger', 'No reset record');
+        return redirect()->back();
+
+
+    }
 }
