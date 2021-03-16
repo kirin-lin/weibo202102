@@ -54,12 +54,20 @@ class User extends Authenticatable
 
     public function statuses()
     {
-        return $this->hasMansy(Statuses::class);
+        return $this->hasMany(Status::class);
     }
 
     public function gravatar($size = '100')
     {
         $hash = md5(strtolower(trim($this->attributes['email'])));
         return "http://www.gravatar.com/avatar/$hash?s=$size";
+    }
+
+    public function show(User $user)
+    {
+        $statuses = $user->statuses()
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
+        return view('users.show', compate('users', 'statuses'));
     }
 }

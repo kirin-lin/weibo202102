@@ -17,6 +17,10 @@ class UsersController extends Controller
         $this->middleware('guest', [
             'only' => ['create']
         ]);
+
+        $this->middleware('throttle:10:60', [
+            'only' => ['store']
+        ]);
     }
 
     public function index()
@@ -32,7 +36,10 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $statuses = $user->statuses()
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
+        return view('users.show', compact('user', 'statuses'));
     }
 
     public function store(Request $request)
