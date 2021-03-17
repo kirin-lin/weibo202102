@@ -70,4 +70,10 @@ class User extends Authenticatable
                     ->paginate(10);
         return view('users.show', compate('users', 'statuses'));
     }
+
+    public function feed()
+    {
+        return $this->statuses()
+                    ->orderBy('created_at', 'desc');
+    }
 }
